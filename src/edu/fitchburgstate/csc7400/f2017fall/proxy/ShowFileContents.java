@@ -2,7 +2,7 @@
  * Class: Object-Oriented Design and Analysis
  * Professor: Orlando Montalvo
  * Assignment: HW 10
- * 
+ * Divya Ninakanti & Nitesh Vuppula 
  * Date: 2017-11-28
  */
 package edu.fitchburgstate.csc7400.f2017fall.proxy;
@@ -38,10 +38,17 @@ public class ShowFileContents {
 
         PrintWriter outWriter = new PrintWriter(System.out);
         for (File file: dir.listFiles()) {
-            if (file.isDirectory()) continue;
+        	if (file.isDirectory()) continue;
             FileStringifier fd = new SlowFileStringifier(file.getPath());
-            fd.display(outWriter);
+            // Printing File name with path
+            System.out.println(file.getPath());
+            // FileStringifier display method execution moved to new thread  
+            new Thread(new Runnable() {
+				@Override
+				public void run() {
+					fd.display(outWriter);
+				}
+			}).start();
         }
     }
-
-}
+  }
