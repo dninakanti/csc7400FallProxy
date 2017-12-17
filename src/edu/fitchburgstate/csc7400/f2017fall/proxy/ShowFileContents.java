@@ -8,6 +8,7 @@
 package edu.fitchburgstate.csc7400.f2017fall.proxy;
 
 import java.io.File;
+import java.io.PrintWriter;
 
 /**
  * Show the contents of all the files in a specific directory
@@ -34,11 +35,11 @@ public class ShowFileContents {
             System.err.println(dirname + " is not a directory");
             return;
         }
-
+        PrintWriter outWriter = new PrintWriter(System.out);
         for (File file: dir.listFiles()) {
         	if (file.isDirectory()) continue;
         	FileStringifierProxy fileStringifierProxy = new FileStringifierProxy(file.getPath());
-        	fileStringifierProxy.start();
+        	fileStringifierProxy.display(outWriter);
         }
     }
   }
