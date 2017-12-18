@@ -11,7 +11,7 @@ import java.io.PrintWriter;
  * @author Divya Ninakanti & Nitesh Vuppula 
  *
  */
-public class FileStringifierProxy {
+public class FileStringifierProxy implements FileStringifier{
 	private String fileName;
 	private SlowFileStringifier slowFileStringifier;
 	
@@ -29,13 +29,16 @@ public class FileStringifierProxy {
 	 }
 
 /**
- * Run the FileStringifierProxy thread and display the content of file using slowFileStringifier.display
+ * display the FileStringifierProxy thread and display the content of file using slowFileStringifier.display
  */
+  @Override
   public void display(PrintWriter outWriter) {
 	  	new Thread(
 	  		new Runnable() {
 				public void run() {
-					slowFileStringifier.display(outWriter);	
+					outWriter.println(stringify());
+					outWriter.flush();
+					//slowFileStringifier.display(outWriter);	
 				}
 			}).start();;	
 		}
@@ -63,6 +66,11 @@ public class FileStringifierProxy {
 	 */
 	public void setSlowFileStringifier(SlowFileStringifier slowFileStringifier) {
 		this.slowFileStringifier = slowFileStringifier;
+	}
+
+	@Override
+	public String stringify() {
+		return slowFileStringifier.stringify();
 	}
 	
 
